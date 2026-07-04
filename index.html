@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrameLabs Studio | Every Frame Tells A Story</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-light: #ffffff;
+            --text-dark: #cccccc;
+            --gold: #c5a059;
+            --gold-dark: #9e7f43;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Music Toggle Button */
+        #music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        #music-control:hover {
+            transform: scale(1.1);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 10%;
+            background: rgba(10, 10, 10, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        }
+
+        .logo-text {
+            font-weight: 800;
+            letter-spacing: 4px;
+            font-size: 1.5rem;
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+
+        /* Hero Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .hero-subtitle {
+            color: var(--gold);
+            font-size: 1.2rem;
+            letter-spacing: 6px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .btn-gold {
+            border: 2px solid var(--gold);
+            padding: 12px 30px;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: all 0.4s ease;
+        }
+
+        .btn-gold:hover {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.4);
+        }
+
+        /* Moving Gallery Section */
+        .section-title {
+            text-align: center;
+            padding: 60px 0 20px;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .section-title span {
+            color: var(--gold);
+        }
+
+        .gallery-container {
+            overflow: hidden;
+            width: 100%;
+            padding: 20px 0;
+            background: #111;
+            position: relative;
+        }
+
+        .gallery-track {
+            display: flex;
+            width: calc(300px * 10);
+            animation: scroll 25s linear infinite;
+        }
+
+        .gallery-track:hover {
+            animation-play-state: paused;
+        }
+
+        .gallery-item {
+            width: 300px;
+            height: 400px;
+            margin: 0 10px;
+            overflow: hidden;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(calc(-320px * 5));
+            }
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 80px 10%;
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .price-card {
+            background: #111;
+            border: 1px solid #222;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .price-card.featured {
+            border-color: var(--gold);
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.1);
+        }
+
+        .price-card h3 {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            color: var(--gold);
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 35px;
+            color: var(--text-dark);
+            text-align: left;
+        }
+
+        .price-features li {
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        .price-features li i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: #050505;
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid #111;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="lagu-mp3.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="music-control" onclick="toggleMusic()">
+        <i id="music-icon" class="fas fa-play"></i>
+    </button>
+
+    <nav>
+        <div class="logo-text">FRAME<span>LABS</span></div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#pricing">Rates</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1 class="hero-title">FRAMELABS</h1>
+        <p class="hero-subtitle">Every Frame Tells A Story.</p>
+        <a href="https://wa.me/60134398400?text=Hi%20FrameLabs%20Studio!%20Saya%20berminat%20nak%20tanya%20pasal%20sesi%20photography."
+            target="_blank" class="btn-gold">BOOK A SESSION</a>
+    </header>
+
+    <section id="gallery">
+        <h2 class="section-title">Our <span>Gallery</span></h2>
+        <div class="gallery-container">
+            <div class="gallery-track">
+                <div class="gallery-item"><img src="gmbr/img14.jpg" alt="Wedding"></div>
+                <div class="gallery-item"><img src="gmbr/img2.jpeg" alt="Portrait"></div>
+                <div class="gallery-item"><img src="gmbr/img3.jpeg" alt="Event"></div>
+                <div class="gallery-item"><img src="gmbr/img4.jpeg" alt="Model"></div>
+                <div class="gallery-item"><img src="gmbr/img5.jpeg" alt="Wedding 2"></div>
+                <div class="gallery-item"><img src="gmbr/img6.jpeg" alt="Wedding"></div>
+                <div class="gallery-item"><img src="gmbr/img7.jpeg" alt="Portrait"></div>
+                <div class="gallery-item"><img src="gmbr/img8.jpeg" alt="Event"></div>
+                <div class="gallery-item"><img src="gmbr/img9.jpeg" alt="Model"></div>
+                <div class="gallery-item"><img src="gmbr/img10.jpeg" alt="Wedding 2"></div>
+                <div class="gallery-item"><img src="gmbr/img11.jpeg" alt="Wedding 2"></div>
+                <div class="gallery-item"><img src="gmbr/img12.jpg" alt="Wedding 2"></div>
+                <div class="gallery-item"><img src="gmbr/img13.jpg" alt="Wedding 2"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <h2 class="section-title">Session <span>Rates</span></h2>
+        <div class="price-grid">
+            <div class="price-card">
+                <h3>PORTRAIT</h3>
+                <div class="price-tag">RM 15</div>
+                <ul class="price-features">
+                    <li><i class="fas fa-check"></i> 2 Hour Session</li>
+                    <li><i class="fas fa-check"></i> 1 Outdoor Location @ At Our Studio</li>
+                    <li><i class="fas fa-check"></i> 15 Edited Photos</li>
+                    <li><i class="fas fa-check"></i> Online Gallery Access</li>
+                </ul>
+                <a href="https://wa.me/60134398400?text=Hi%20FrameLabs!%20Saya%20berminat%20nak%20booking%20Pakej%20PORTRAIT%20(RM15)."
+                    target="_blank" class="btn-gold" style="display:block;">SELECT</a>
+            </div>
+            <div class="price-card featured">
+                <h3>Event & Content</h3>
+                <div class="price-tag">RM 25 </div>
+                <ul class="price-features">
+                    <li><i class="fas fa-check"></i> 4 Hours Coverage</li>
+                    <li><i class="fas fa-check"></i> Event & Content</li>
+                    <li><i class="fas fa-check"></i> Photo & Video </li>
+                    <li><i class="fas fa-check"></i> Google Drive with All Files</li>
+                </ul>
+                <a href="https://wa.me/60134398400?text=Hi%20FrameLabs!%20Saya%20berminat%20nak%20booking%20Pakej%20EventContent%20(RM25)."
+                    target="_blank" class="btn-gold"
+                    style="display:block; background:var(--gold); color:#000;">POPULAR</a>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 FRAMELABS STUDIO. EVERY FRAME TELLS A STORY.</p>
+    </footer>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        const icon = document.getElementById('music-icon');
+
+        // Fungsi main/henti muzik
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                icon.className = 'fas fa-pause';
+            } else {
+                music.pause();
+                icon.className = 'fas fa-play';
+            }
+        }
+
+        // Trik Autoplay: Memandangkan Chrome/Safari sekat autoplay tanpa kebenaran, 
+        // muzik akan mula automatik sebaik sahaja user klik apa-apa di dalam website.
+        document.addEventListener('click', function () {
+            if (music.paused && icon.className === 'fas fa-play') {
+                // Buat cubaan autoplay secara senyap pada klik pertama
+                music.play().then(() => {
+                    icon.className = 'fas fa-pause';
+                }).catch(err => console.log("Autoplay disekat pelayar web. Perlu klik butang manual."));
+            }
+        }, { once: true }); // Hanya jalan sekali sahaja
+    </script>
+</body>
+
+</html>
